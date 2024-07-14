@@ -1,0 +1,61 @@
+<div class="fixed inset-0 flex items-center justify-center z-50">
+  <div class="bg-white p-5 shadow-2xl rounded-lg w-96 relative">
+    <button class="absolute top-2 right-2 bg-transparent border-none text-2xl text-gray-500 hover:text-black" (click)="closeModal()">
+      <i class="fa-solid fa-xmark text-red-600"></i>
+    </button>
+    <h2 class="mb-5 text-2xl text-gray-800">Add New Workout</h2>
+    <form #workoutForm="ngForm" (ngSubmit)="addWorkout(workoutForm)" class="space-y-4">
+      <div>
+        <label for="username" class="font-bold mb-1 block">Username:</label>
+        <input
+          type="text"
+          id="username"
+          [(ngModel)]="username"
+          name="username"
+          required
+          class="w-full p-2 border border-gray-300 rounded-lg focus:border-green-600"
+        />
+        <div *ngIf="workoutForm.submitted && !username" class="text-red-600 text-sm mt-1">
+          Username is required.
+        </div>
+      </div>
+      <div>
+        <label for="workoutType" class="font-bold mb-1 block">Workout Type:</label>
+        <select
+          id="workoutType"
+          [(ngModel)]="workoutType"
+          name="workoutType"
+          required
+          class="w-full p-2 border border-gray-300 rounded-lg focus:border-green-600"
+        >
+          <option value="Cycling">Cycling</option>
+          <option value="Running">Running</option>
+          <option value="Swimming">Swimming</option>
+          <option value="Yoga">Yoga</option>
+        </select>
+      </div>
+      <div>
+        <label for="workoutMinutes" class="font-bold mb-1 block">Workout Minutes:</label>
+        <input
+          type="number"
+          id="workoutMinutes"
+          [(ngModel)]="workoutMinutes"
+          name="workoutMinutes"
+          required
+          [min]="0"
+          class="w-full p-2 border border-gray-300 rounded-lg focus:border-green-600"
+        />
+        <div *ngIf="workoutForm.submitted && workoutMinutes === null" class="text-red-600 text-sm mt-1">
+          Workout minutes are required.
+        </div>
+        <div *ngIf="workoutForm.submitted && workoutMinutes !== null && workoutMinutes < 0" class="text-red-600 text-sm mt-1">
+          Workout minutes cannot be negative.
+        </div>
+      </div>
+      <button type="submit" class="self-center bg-green-600 text-white py-2 px-4 rounded-lg hover:bg-green-700">
+        Add Workout
+      </button>
+    </form>
+  </div>
+</div>
+<div class="fixed inset-0 bg-black bg-opacity-50 z-40"></div>

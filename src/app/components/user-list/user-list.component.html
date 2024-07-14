@@ -1,0 +1,77 @@
+<div class="max-w-7xl mx-auto p-5 font-sans text-gray-800">
+  <h1 class="text-center mb-5 text-4xl text-green-600">Workout Tracker</h1>
+  
+  <div class="flex justify-between mb-5">
+    <div class="flex-1 mr-2">
+      <input
+        type="text"
+        placeholder="Search by name..."
+        [(ngModel)]="searchTerm"
+        (input)="onSearchChange()"
+        class="w-full p-2 border border-gray-300 rounded-lg focus:border-green-600"
+      />
+    </div>
+    
+    <div class="flex-1 ml-12 flex items-center">
+      <label for="workoutTypeFilter" class="mr-2">Filter by workout type:</label>
+      <select
+        id="workoutTypeFilter"
+        [(ngModel)]="selectedWorkoutType"
+        (change)="onWorkoutTypeChange()"
+        class="w-full p-2 border border-gray-300 rounded-lg focus:border-green-600"
+      >
+        <option value="all">All</option>
+        <option *ngFor="let type of workoutTypes" [value]="type">
+          {{ type }}
+        </option>
+      </select>
+    </div>
+  </div>
+
+  <table class="w-full mb-5 shadow-lg">
+    <thead>
+      <tr>
+        <th class="p-3 bg-green-600 text-white font-bold">Name</th>
+        <th class="p-3 bg-green-600 text-white font-bold">Workouts</th>
+        <th class="p-3 bg-green-600 text-white font-bold">Number of Workouts</th>
+        <th class="p-3 bg-green-600 text-white font-bold">Total Minutes</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let user of paginatedUsers" class="even:bg-gray-100 hover:bg-gray-200">
+        <td class="p-3 text-center">{{ user.name }}</td>
+        <td class="p-3 text-center">
+          <ul class="pl-5 list-none">
+            <li *ngFor="let workout of user.workouts">
+              {{ workout.type }} - {{ workout.minutes }} mins
+            </li>
+          </ul>
+        </td>
+        <td class="p-3 text-center">{{ user.workouts.length }}</td>
+        <td class="p-3 text-center">{{ calculateTotalMinutes(user.workouts) }}</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <div class="flex justify-center items-center mt-5">
+    <div class="flex items-center mr-5">
+      <label for="rowsPerPage" class="mr-2">Rows per page:</label>
+      <select
+        id="rowsPerPage"
+        [(ngModel)]="rowsPerPage"
+        (change)="changeRowsPerPage()"
+        class="p-1 border border-gray-300 rounded-lg w-20"
+      >
+        <option *ngFor="let option of rowsPerPageOptions" [value]="option">
+          {{ option }}
+        </option>
+      </select>
+    </div>
+    
+    <div class="flex items-center">
+      <button (click)="previousPage()" [disabled]="currentPage === 1" class="bg-green-600 text-white p-2 rounded-lg mr-2 disabled:bg-gray-300 disabled:cursor-not-allowed hover:bg-green-700"> &lt; Previous </button>
+      <span class="mx-2">{{ currentPage }} / {{ totalPages }}</span>
+      <button (click)="nextPage()" [disabled]="currentPage === totalPages" class="bg-green-600 text-white p-2 rounded-lg ml-2 disabled:bg-gray-300 disabled:cursor-not-allowed hover:bg-green-700"> Next &gt; </button>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,56 @@
+<div class="fixed inset-0 flex items-center justify-center z-50">
+  <div class="bg-white p-5 shadow-2xl rounded-lg w-full max-w-4xl relative">
+    <button class="absolute top-3 right-3 bg-transparent border-none cursor-pointer" (click)="closeModal()">
+      <svg
+        xmlns="http://www.w3.org/2000/svg"
+        viewBox="0 0 352 512"
+        class="w-5 h-5 fill-current text-gray-500 transition-colors duration-300 hover:text-black"
+      >
+        <path
+          d="M242.72 256l100.07-100.07c12.28-12.28 12.28-32.19 0-44.48l-22.24-22.24c-12.28-12.28-32.19-12.28-44.48 0L176 189.28 75.93 89.21c-12.28-12.28-32.19-12.28-44.48 0L9.21 111.45c-12.28 12.28-12.28 32.19 0 44.48L109.28 256 9.21 356.07c-12.28 12.28-12.28 32.19 0 44.48l22.24 22.24c12.28 12.28 32.19 12.28 44.48 0L176 322.72l100.07 100.07c12.28 12.28 32.19 12.28 44.48 0l22.24-22.24c12.28-12.28 12.28-32.19 0-44.48L242.72 256z"
+        />
+      </svg>
+    </button>
+    <h2 class="text-2xl text-gray-800 mb-5">
+      {{ selectedUser ? selectedUser.name + "'s Workout Chart" : "Charts" }}
+    </h2>
+    <div class="flex w-full mt-5">
+      <div class="w-1/3 pr-5 border-r-2 border-gray-200 max-h-72 overflow-y-auto">
+        <ul class="list-none p-0 m-0">
+          <li
+            *ngFor="let user of users"
+            (click)="selectUser(user)"
+            [class.selected]="user === selectedUser"
+            class="p-2 mb-2 bg-gray-100 border border-gray-300 rounded cursor-pointer transition-all duration-300 hover:bg-gray-200"
+          >
+            {{ user.name }}
+          </li>
+        </ul>
+      </div>
+      <div class="w-2/3 pl-5 flex flex-col items-center">
+        <ngx-charts-bar-vertical
+          *ngIf="selectedUser && selectedUser.workouts && selectedUser.workouts.length > 0"
+          [results]="multi"
+          [gradient]="false"
+          [xAxis]="true"
+          [yAxis]="true"
+          [legend]="true"
+          [xAxisLabel]="'Workouts'"
+          [yAxisLabel]="'Minutes'"
+          class="w-full h-72"
+        >
+        </ngx-charts-bar-vertical>
+        <div
+          *ngIf="selectedUser && (!selectedUser.workouts || selectedUser.workouts.length === 0)"
+          class="text-lg text-gray-600 mt-12 text-center"
+        >
+          No workout data available for {{ selectedUser.name }}.
+        </div>
+        <div *ngIf="!selectedUser" class="text-lg text-gray-600 mt-12 text-center">
+          Please select a user to display their workout data.
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="fixed inset-0 bg-black bg-opacity-50 z-40"></div>

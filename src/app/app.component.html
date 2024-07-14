@@ -1,0 +1,44 @@
+<div class="relative min-h-screen">
+  <!-- Floating buttons -->
+  <div class="fixed bottom-5 right-5 z-50 flex flex-col space-y-5">
+    <button
+      class="w-12 h-12 bg-green-600 text-white rounded-full p-2 pl-3 transition-transform transform hover:scale-110"
+      (click)="showAddUserModal()"
+    >
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512" width="22" height="22">
+        <path
+          fill="#ffffff"
+          d="M256 80c0-17.7-14.3-32-32-32s-32 14.3-32 32V224H48c-17.7 0-32 14.3-32 32s14.3 32 32 32H192V432c0 17.7 14.3 32 32 32s32-14.3 32-32V288H400c17.7 0 32-14.3 32-32s-14.3-32-32-32H256V80z"
+        />
+      </svg>
+    </button>
+    <button
+      class="w-12 h-12 bg-green-600 text-white rounded-full p-2 pl-3 transition-transform transform hover:scale-110"
+      (click)="showChartModal()"
+    >
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512" width="22" height="22">
+        <path
+          fill="#ffffff"
+          d="M160 80c0-26.5 21.5-48 48-48h32c26.5 0 48 21.5 48 48V432c0 26.5-21.5 48-48 48H208c-26.5 0-48-21.5-48-48V80zM0 272c0-26.5 21.5-48 48-48H80c26.5 0 48 21.5 48 48V432c0 26.5-21.5 48-48 48H48c-26.5 0-48-21.5-48-48V272zM368 96h32c26.5 0 48 21.5 48 48V432c0 26.5-21.5 48-48 48H368c-26.5 0-48-21.5-48-48V144c0-26.5 21.5-48 48-48z"
+        />
+      </svg>
+    </button>
+  </div>
+
+  <!-- User List Component -->
+  <app-user-list></app-user-list>
+
+  <!-- Add User Modal -->
+  <div *ngIf="showAddUserModalFlag" class="fixed inset-0 flex justify-center items-center bg-black bg-opacity-50 z-50">
+    <div class="bg-white p-5 shadow-lg z-50">
+      <app-add-user-modal (close)="closeAddUserModal()"></app-add-user-modal>
+    </div>
+  </div>
+
+  <!-- Chart Modal -->
+  <div *ngIf="showChartModalFlag" class="fixed inset-0 flex justify-center items-center bg-black bg-opacity-50 z-50">
+    <div class="bg-white p-5 shadow-lg z-50">
+      <app-chart-modal (close)="closeChartModal()"></app-chart-modal>
+    </div>
+  </div>
+</div>
